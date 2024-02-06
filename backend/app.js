@@ -55,7 +55,7 @@ const client = new TwitterApi({
   // Handle POST request for text tweets
   app.post('/post/tweet', async (req, res) => {
     try {
-      await rwClient.v2.tweet("This tweet has been created using nodejs and this is the new message");
+      await rwClient.v2.tweet(req.body.tweet);
       res.status(200).json({ success: true, message: 'Text tweet posted successfully' });
     } catch (error) {
       console.error(error);

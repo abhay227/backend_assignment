@@ -4,9 +4,7 @@ import passport from 'passport';
 import FacebookStrategy from 'passport-facebook';
 import InstagramStrategy from 'passport-instagram';
 import { authLogin } from '../Controllers/authController.js';
-import GitHubStrategy from 'passport-github2';
 import TwitterStrategy from 'passport-twitter';
-import request from 'request-promise';
 import GoogleStrategy from 'passport-google-oauth20';
 
 const authRouter = express.Router();
@@ -72,33 +70,6 @@ authRouter.get('/instagram/logout', (req, res) => {
     res.redirect(CLIENT2);
 });
 
-// // GitHub OAuth
-// passport.use(new GitHubStrategy({
-//     clientID: '24726497613662656',
-//     clientSecret: 'df1024c5118bae88145d59032bec4bb6',
-//     callbackURL: 'http://localhost:8000/auth/github/callback'
-// }, (accessToken, refreshToken, profile, cb) => {
-//     console.log("GitHub Authentication");
-//     console.log("accessToken", accessToken);
-//     console.log("refreshToken", refreshToken);
-//     console.log("profile", profile);
-//     return cb(null, profile);
-// }));
-
-// authRouter.get('/github', passport.authenticate('github'));
-
-// authRouter.get('/github/callback', passport.authenticate('github', { successRedirect: CLIENT, failureRedirect: '/login' }),
-//     function (req, res) {
-//         res.redirect('/');
-//     });
-
-// authRouter.get('/github/getInfo', authLogin);
-// authRouter.get('/github/logout', (req, res) => {
-//     console.log("GitHub Logout");
-//     req.logout();
-//     req.session = null;
-//     res.redirect(CLIENT2);
-// });
 
 //Twitter OAuth
 passport.use(new TwitterStrategy({
@@ -126,6 +97,13 @@ authRouter.get('/twitter/logout', (req, res) => {
     req.session = null;
     res.redirect(CLIENT2);
 });
+
+// authRouter.get('/twitter/logout', function(req, res, next){
+//     req.logout(function(err) {
+//       if (err) { return next(err); }
+//       res.redirect(CLIENT2);
+//     });
+//   });
 
 
 authRouter.post('/instagram', async (req, res) => {
